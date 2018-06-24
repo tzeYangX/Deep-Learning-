@@ -67,11 +67,11 @@ print(LeNet5())
 
 torch.manual_seed(2018)  # 设置随机数种子
 model = LeNet5()  # 实例化模型
-#optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9) # 学习率、动量均可以修改
+#optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9) # 学习率、动量修改
 optimizer = optim.Adam(model.parameters(), lr=0.0005, betas=(0.9, 0.999), eps=1e-08, weight_decay=0)
 #optimizer = optim.RMSprop(model.parameters(), lr=0.01, alpha=0.97, eps=1e-08, weight_decay=0, momentum=0, centered=False)
 #optimizer=optim.Adadelta(model.parameters(), lr=1.0, rho=0.95, eps=1e-06, weight_decay=0)
-n_epoch = 30  # 可修改迭代更多次
+n_epoch = 30  # 修改迭代更多次
 for epoch in range(1, n_epoch + 1):
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader): #枚举函数，枚举数据集中的数据
@@ -79,7 +79,7 @@ for epoch in range(1, n_epoch + 1):
         output = model(data)  # 前向推理
         #print(output)
         #print(batch_idx)
-        loss = F.cross_entropy(output, target)
+        loss = F.cross_entropy(output, target) # 交叉熵损失函数
         #loss = F.nll_loss(output, target)  # 非负极大似然损失函数
         loss.backward()  # 反向传播计算梯度
         optimizer.step()  # 参数调整
@@ -107,8 +107,7 @@ for epoch in range(1, n_epoch + 1):
         '\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.4f}%)\n'.format(
             test_loss, correct, len(test_loader.dataset),
             100. * correct / len(test_loader.dataset)))
-            
-            
+                     
   
 # 创建提取特征类
 class FeatureExtractor(nn.Module):
@@ -129,13 +128,13 @@ class FeatureExtractor(nn.Module):
 print(FeatureExtractor(model,['C1','C2']))
 
 
-
-
 # 提取数据
 test_loader_for_feature = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=True)
 img, label = iter(test_loader_for_feature).next()
 exactor = FeatureExtractor(model, ['C1', 'C3'])
 features = exactor(img)
+
+
 # 可视化
 pylab.rcParams['figure.figsize'] = (10.0, 10.0) # plot size
 for i in range(6):
