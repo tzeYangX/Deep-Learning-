@@ -49,7 +49,7 @@ class LeNet5(nn.Module):  # 参考lenet5网络结构 形似
         self.S4 = nn.MaxPool2d(kernel_size=2, stride=2)
         self.C5 = nn.Sequential(nn.Linear(1600, 256), nn.ReLU())  # 全连接层
         self.F6 = nn.Sequential(nn.Linear(256, 128), nn.ReLU())
-        self.OUT = nn.Linear(128, 16)
+        self.OUT = nn.Linear(128, 10)
 
     def forward(self, x):
         x = self.C1(x)
